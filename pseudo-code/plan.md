@@ -2,36 +2,31 @@
 ClientSide
 - auth util
   - register
+    - asks server to create user
+      - if a new user is created, provide a session token
   - login
+    - asks server if the user exists
+      - if the user exists, provide a new session token
   - logout
-  - fetch (server with bearer token)
+  - fetch (request server with saves bearer token)
+  - isSaved: boolean
   - saveUser (localstorage)
-  - isSaved (localStorage)
+    - if user is not logged in, save nothing
+    - if  isSaved is false, save nothing
+    - save user to localstorage
 - ui
   - context provider
   - context consumer
-- Routes
-  - Register
-    - asks server to create user
-      - if a new user is created, provide a session token
-  - Log In
-    - asks server if the user exists
-      - if the user exists, provide a new session token
-  - Refresh Token
-    - asks server if the token exists
-      - is the token exists, remove the sent token and provide a new session token
-- Ask if its ok to store the user
-  - if yes, when register or login, saves the auth header in localstorage
-  - this will allow the user to exit page and re enter as the user when re entering the page
-- After X seconds, automatically refresh token
-- Special Fetch Request
-  - does a fetch request except it adds a token as the auth header
-
+  - redirect if no user
+- automatic refresh token
+  - asks server if the token exists
+    - is the token exists, remove the sent token and provide a new session token
 
 ServerSide
 - Routes
   - Register
   - Log In
   - Refresh Token
-- middleware which reads the auth header and gets a user from it
-- middleware that requires a user
+- middleware
+  - reads the auth header and gets a user from it
+  - middleware that requires a user
