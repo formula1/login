@@ -26,7 +26,7 @@ export function UserItem(){
   }, [])
 
   if(!user){
-    return <h1>Please Wait</h1>
+    return null;
   }
 
   return (
